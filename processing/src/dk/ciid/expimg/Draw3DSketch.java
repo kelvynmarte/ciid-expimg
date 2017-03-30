@@ -20,7 +20,7 @@ public class Draw3DSketch extends PApplet {
         leap = new LeapMotion(this);
         String portName = Serial.list()[3];
         print(Serial.list());
-        serialPort = new Serial(this, portName, 9600);
+        serialPort = new Serial(this, portName, 115200);
     }
 
     public void draw() {
