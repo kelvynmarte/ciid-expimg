@@ -29,15 +29,18 @@ void loop()
       //Serial.read();
       String third  = Serial.readStringUntil('\n');
       //Serial.print(first); Serial.print(" - "); Serial.print(second); Serial.print(" - "); Serial.println(third); 
-      red = (int)first.toInt();
+
+      if(first != NULL && second != NULL & third != NULL){
+              red = (int)first.toInt();
       green  = (int)second.toInt();
       blue  = (int)third.toInt();
+      }
+
     }
   
 
   
   setColor(red, green, blue);  // 
-  delay(100);
 }
 
 void setColor(int r, int g, int b)

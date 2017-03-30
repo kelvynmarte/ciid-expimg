@@ -3,10 +3,13 @@ package dk.ciid.expimg;
 import de.voidplus.leapmotion.*;
 import processing.core.PApplet;
 import processing.core.PVector;
+import processing.serial.Serial;
 
 public class Draw3DSketch extends PApplet {
 
     LeapMotion leap;
+    private Serial serialPort;
+
 
 
     public void settings() {
@@ -15,6 +18,9 @@ public class Draw3DSketch extends PApplet {
 
     public void setup() {
         leap = new LeapMotion(this);
+        String portName = Serial.list()[3];
+        print(Serial.list());
+        serialPort = new Serial(this, portName, 9600);
     }
 
     public void draw() {
@@ -63,18 +69,22 @@ public class Draw3DSketch extends PApplet {
 
 
             int distance = new Double(Math.sqrt(Math.pow((fingerIndex.getPosition().x - width/2), 2) + Math.pow((fingerIndex.getPosition().y - height/2), 2))).intValue();
-            boolean isIntersecting = (distance < 150);
+            boolean isIntersecting = (distance < 100);
 
 
-            println(isIntersecting);
+            // println(isIntersecting);
 
             if(isIntersecting){
                 fill(255,255,40);
+                serialPort.write("0;0;255\n");
+
             }else{
+                serialPort.write("0;0;0\n");
                 fill(140);
             }
 
-            ellipse(width/2, height/2, 300, 308);
+
+            ellipse(width/2, height/2, 200, 200);
 
 
             fill(0);
