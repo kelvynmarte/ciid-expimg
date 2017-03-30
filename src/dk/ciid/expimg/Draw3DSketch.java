@@ -20,7 +20,8 @@ public class Draw3DSketch extends PApplet {
     public void draw() {
 
         background(255);
-        background(255);
+
+        noStroke();
         // ...
 
         int fps = leap.getFrameRate();
@@ -48,157 +49,40 @@ public class Draw3DSketch extends PApplet {
 
             // --------------------------------------------------
             // Drawing
-            hand.draw();
-
-
-            // ==================================================
-            // 3. Arm
-
-            if (hand.hasArm()) {
-                Arm     arm              = hand.getArm();
-                float   armWidth         = arm.getWidth();
-                PVector armWristPos      = arm.getWristPosition();
-                PVector armElbowPos      = arm.getElbowPosition();
-            }
+            //hand.draw();
 
 
             // ==================================================
             // 4. Finger
 
-            Finger  fingerThumb        = hand.getThumb();
-            // or                        hand.getFinger("thumb");
-            // or                        hand.getFinger(0);
 
             Finger  fingerIndex        = hand.getIndexFinger();
             // or                        hand.getFinger("index");
             // or                        hand.getFinger(1);
 
-            Finger  fingerMiddle       = hand.getMiddleFinger();
-            // or                        hand.getFinger("middle");
-            // or                        hand.getFinger(2);
-
-            Finger  fingerRing         = hand.getRingFinger();
-            // or                        hand.getFinger("ring");
-            // or                        hand.getFinger(3);
-
-            Finger  fingerPink         = hand.getPinkyFinger();
-            // or                        hand.getFinger("pinky");
-            // or                        hand.getFinger(4);
 
 
-            for (Finger finger : hand.getFingers()) {
-                // or              hand.getOutstretchedFingers();
-                // or              hand.getOutstretchedFingersByAngle();
-
-                int     fingerId         = finger.getId();
-                PVector fingerPosition   = finger.getPosition();
-                PVector fingerStabilized = finger.getStabilizedPosition();
-                PVector fingerVelocity   = finger.getVelocity();
-                PVector fingerDirection  = finger.getDirection();
-                float   fingerTime       = finger.getTimeVisible();
-
-                // ------------------------------------------------
-                // Drawing
-
-                // Drawing:
-                // finger.draw();  // Executes drawBones() and drawJoints()
-                // finger.drawBones();
-                // finger.drawJoints();
-
-                // ------------------------------------------------
-                // Selection
-
-                switch(finger.getType()) {
-                    case 0:
-                        // System.out.println("thumb");
-                        break;
-                    case 1:
-                        // System.out.println("index");
-                        break;
-                    case 2:
-                        // System.out.println("middle");
-                        break;
-                    case 3:
-                        // System.out.println("ring");
-                        break;
-                    case 4:
-                        // System.out.println("pinky");
-                        break;
-                }
+            int distance = new Double(Math.sqrt(Math.pow((fingerIndex.getPosition().x - width/2), 2) + Math.pow((fingerIndex.getPosition().y - height/2), 2))).intValue();
+            boolean isIntersecting = (distance < 150);
 
 
-                // ================================================
-                // 5. Bones
-                // --------
-                // https://developer.leapmotion.com/documentation/java/devguide/Leap_Overview.html#Layer_1
+            println(isIntersecting);
 
-                Bone    boneDistal       = finger.getDistalBone();
-                // or                      finger.get("distal");
-                // or                      finger.getBone(0);
-
-                Bone    boneIntermediate = finger.getIntermediateBone();
-                // or                      finger.get("intermediate");
-                // or                      finger.getBone(1);
-
-                Bone    boneProximal     = finger.getProximalBone();
-                // or                      finger.get("proximal");
-                // or                      finger.getBone(2);
-
-                Bone    boneMetacarpal   = finger.getMetacarpalBone();
-                // or                      finger.get("metacarpal");
-                // or                      finger.getBone(3);
-
-                // ------------------------------------------------
-                // Touch emulation
-
-                int     touchZone        = finger.getTouchZone();
-                float   touchDistance    = finger.getTouchDistance();
-
-                switch(touchZone) {
-                    case -1: // None
-                        break;
-                    case 0: // Hovering
-                        // println("Hovering (#" + fingerId + "): " + touchDistance);
-                        break;
-                    case 1: // Touching
-                        // println("Touching (#" + fingerId + ")");
-                        break;
-                }
+            if(isIntersecting){
+                fill(255,255,40);
+            }else{
+                fill(140);
             }
 
+            ellipse(width/2, height/2, 300, 308);
 
-            // ==================================================
-            // 6. Tools
 
-            for (Tool tool : hand.getTools()) {
-                int     toolId           = tool.getId();
-                PVector toolPosition     = tool.getPosition();
-                PVector toolStabilized   = tool.getStabilizedPosition();
-                PVector toolVelocity     = tool.getVelocity();
-                PVector toolDirection    = tool.getDirection();
-                float   toolTime         = tool.getTimeVisible();
+            fill(0);
+            ellipse(fingerIndex.getPosition().x, fingerIndex.getPosition().y, 8, 8);
 
-                // ------------------------------------------------
-                // Drawing:
-                // tool.draw();
 
-                // ------------------------------------------------
-                // Touch emulation
 
-                int     touchZone        = tool.getTouchZone();
-                float   touchDistance    = tool.getTouchDistance();
 
-                switch(touchZone) {
-                    case -1: // None
-                        break;
-                    case 0: // Hovering
-                        // println("Hovering (#" + toolId + "): " + touchDistance);
-                        break;
-                    case 1: // Touching
-                        // println("Touching (#" + toolId + ")");
-                        break;
-                }
-            }
         }
 
 
@@ -210,6 +94,8 @@ public class Draw3DSketch extends PApplet {
             float deviceVericalViewAngle = device.getVerticalViewAngle();
             float deviceRange = device.getRange();
         }
+
+
     }
 
     // ======================================================
