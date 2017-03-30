@@ -9,11 +9,16 @@ import processing.core.PImage;
 import processing.core.PVector;
 import processing.serial.Serial;
 
+import java.util.ArrayList;
+
 public class DrawPhotoSketch extends PApplet {
 
     LeapMotion leap;
     private Serial serialPort;
     PImage img;
+
+    ArrayList<String> images = new ArrayList();
+    int imageIndex = 0;
 
 
     public void settings() {
@@ -25,9 +30,22 @@ public class DrawPhotoSketch extends PApplet {
         String portName = Serial.list()[3];
         print(Serial.list());
         serialPort = new Serial(this, portName, 115200);
+        images.add("RabbitHopF_1.jpg");
+        images.add("RabbitHopF_2.jpg");
+        images.add("RabbitHopF_3.jpg");
+        images.add("RabbitHopF_4.jpg");
+        images.add("RabbitHopF_5.jpg");
+        images.add("RabbitHopF_6.jpg");
+        images.add("RabbitHopF_7.jpg");
+        images.add("RabbitHopF_8.jpg");
 
-        img = loadImage("girl.jpg");
+
+        loadImageWithIndex(0);
         image(img, 0, 0);
+    }
+
+    public void loadImageWithIndex(int index){
+        img = loadImage(images.get(index));
     }
 
     public void draw() {
@@ -89,9 +107,9 @@ public class DrawPhotoSketch extends PApplet {
                 println("get " + fX + " " +fY);
                  color = img.get(fX, fY);
                 serialPort.write(red(color) + ";" + green(color) + ";" + blue(color) + "\n");
-                delay(20);
+                //delay(40);
                 serialPort.write("0;0;0\n");
-                delay(20);
+                // delay(40);
             }else{
 
                 serialPort.write("0;0;0\n");
@@ -124,6 +142,22 @@ public class DrawPhotoSketch extends PApplet {
         }
 
 
+    }
+
+    public void keyPressed()
+    {
+        if(key == CODED)
+        {
+            if (keyCode == LEFT)
+            {
+                if(imageIndex > 0) loadImageWithIndex(--imageIndex);
+            }
+            if(keyCode == RIGHT)
+            {
+                if(imageIndex < images.size()-1) loadImageWithIndex(++imageIndex);
+            }
+
+        }
     }
 
     // ======================================================
