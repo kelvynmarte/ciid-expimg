@@ -31,16 +31,14 @@ void loop()
       //Serial.print(first); Serial.print(" - "); Serial.print(second); Serial.print(" - "); Serial.println(third); 
 
       if(first != NULL && second != NULL & third != NULL){
-              red = (int)first.toInt();
+      red = (int)first.toInt();
       green  = (int)second.toInt();
       blue  = (int)third.toInt();
       }
 
     }
   
-
-  
-  setColor(red, green, blue);  // 
+  setColor(red, green, blue);  
 }
 
 void setColor(int r, int g, int b)
@@ -53,7 +51,4 @@ void setColor(int r, int g, int b)
   analogWrite(redPin, r);
   analogWrite(greenPin, g);
   analogWrite(bluePin, b); 
-  Serial.print(r);
-  Serial.print(g);
-  Serial.println(b);
 }
