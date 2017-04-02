@@ -61,42 +61,9 @@ public class DrawPhotoSketch extends PApplet {
         for (Hand hand : leap.getHands ()) {
 
 
-            // ==================================================
-            // 2. Hand
-
-            int     handId             = hand.getId();
-            PVector handPosition       = hand.getPosition();
-            PVector handStabilized     = hand.getStabilizedPosition();
-            PVector handDirection      = hand.getDirection();
-            PVector handDynamics       = hand.getDynamics();
-            float   handRoll           = hand.getRoll();
-            float   handPitch          = hand.getPitch();
-            float   handYaw            = hand.getYaw();
-            boolean handIsLeft         = hand.isLeft();
-            boolean handIsRight        = hand.isRight();
-            float   handGrab           = hand.getGrabStrength();
-            float   handPinch          = hand.getPinchStrength();
-            float   handTime           = hand.getTimeVisible();
-            PVector spherePosition     = hand.getSpherePosition();
-            float   sphereRadius       = hand.getSphereRadius();
-
-            // --------------------------------------------------
-            // Drawing
-            //hand.draw();
-
-
-            // ==================================================
-            // 4. Finger
-
 
             Finger  fingerIndex        = hand.getIndexFinger();
-            // or                        hand.getFinger("index");
-            // or                        hand.getFinger(1);
 
-
-
-            // int distance = new Double(Math.sqrt(Math.pow((fingerIndex.getPosition().x - width/2), 2) + Math.pow((fingerIndex.getPosition().y - height/2), 2))).intValue();
-            // boolean isIntersecting = (distance < 100);
             int color = color(0);
 
             if(fingerIndex.getPosition().x > (width/2) - (img.width/2) && fingerIndex.getPosition().x < (width/2) + (img.width/2) &&
@@ -108,19 +75,13 @@ public class DrawPhotoSketch extends PApplet {
                  color = img.get(fX, fY);
                 serialPort.write(red(color) + ";" + green(color) + ";" + blue(color) + "\n");
                 //delay(40);
-                serialPort.write("0;0;0\n");
+                // serialPort.write("0;0;0\n");
                 // delay(40);
             }else{
 
                 serialPort.write("0;0;0\n");
 
             }
-            //
-
-
-
-
-            //ellipse(width/2, height/2, 200, 200);
 
             stroke(255);
             fill(color);
